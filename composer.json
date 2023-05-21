@@ -1,0 +1,27 @@
+{
+    "name": "misfitpixel/common-auth",
+    "description": "OAuth and other security systems for API microservices",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Brandin Chiu",
+            "email": "brandin@misfitpixel.io"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.4"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "autoload": {
+        "psr-4": { "Misfitpixel\\Common\\Auth\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}
