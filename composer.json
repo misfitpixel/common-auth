@@ -11,8 +11,26 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "misfitpixel/common-exceptions": "dev-main",
+        "misfitpixel/common-model": "dev-main",
+        "league/oauth2-server": "^8.4",
+        "nyholm/psr7": "^1.8",
+        "symfony/psr-http-message-bridge": "^2.2",
+        "symfony/security-bundle": "^5.4"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/misfitpixel/common-model.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/misfitpixel/common-exceptions.git"
+        }
+    ],
     "config": {
         "platform": {
             "php": "7.4"
