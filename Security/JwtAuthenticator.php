@@ -11,6 +11,8 @@ use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
 use MisfitPixel\Common\Auth\Entity\User;
 use MisfitPixel\Common\Exception;
+use MisfitPixel\Common\Auth\Entity\Abstraction\BaseUserToken;
+use MisfitPixel\Common\Model\Entity\Status;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -117,18 +119,27 @@ class JwtAuthenticator extends AbstractAuthenticator
                     throw new Exception\MissingScopesException($routeScopes);
                 }
 
-                /**
-                 * TODO: find() user.
-                 */
-                $user = new User();
-                $user->setUsername($decodedJwt->claims()->get('sub'))
-                    ->setPassword('null')
+                /** @var BaseUserToken $userToken */
+                $userToken = $this->container->get('doctrine')
+                    ->getRepository($this->container->getParameter('oauth')['token_entity'])
+                    ->findOneByToken($decodedJwt->claims()->get('jti'))
                 ;
+
+                /**
+                 * confirm validity of token.
+                 * TODO: may not need to do time check since $this->jwtConfiguration handles that.
+                 */
+                if(
+                    $userToken->getStatusId() !== Status::ACTIVE ||
+                    $userToken->getDateExpired()->getTimestamp() < time()
+                ) {
+                    throw new Exception\UnauthorizedException();
+                }
 
                 /**
                  * match user to username encoded in JWT.
                  */
-                return $user;
+                return $userToken->getUser();
             })
         );
     }

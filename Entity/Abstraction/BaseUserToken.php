@@ -49,9 +49,6 @@ abstract class BaseUserToken implements AccessTokenEntityInterface, RefreshToken
     /** @var Scope[]  */
     protected array $scopes = [];
 
-    /** @var int|null  */
-    protected ?int $identityId = null;
-
     /**
      * @return int|null
      */
@@ -210,25 +207,6 @@ abstract class BaseUserToken implements AccessTokenEntityInterface, RefreshToken
     public function addScope(ScopeEntityInterface $scope): self
     {
         $this->scopes[] = $scope;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getIdentityId(): ?int
-    {
-        return $this->identityId;
-    }
-
-    /**
-     * @param int $identityId
-     * @return $this
-     */
-    public function setIdentityId(int $identityId): self
-    {
-        $this->identityId = $identityId;
 
         return $this;
     }

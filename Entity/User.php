@@ -118,6 +118,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, UserEnt
     {
         /**
          * TODO: get roles from database RBAC system.
+         * TODO: get roles from scopes?
          */
         return [];
     }
