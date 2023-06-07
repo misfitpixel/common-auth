@@ -37,7 +37,7 @@
         }
     },
     "autoload": {
-        "psr-4": { "Misfitpixel\\Common\\Auth\\": "" },
+        "psr-4": { "MisfitPixel\\Common\\Auth\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
