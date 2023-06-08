@@ -48,7 +48,7 @@ class JwtAuthenticator extends AbstractAuthenticator
          */
         $this->jwtConfiguration = Configuration::forSymmetricSigner(
             new Sha256(),
-            InMemory::plainText('')
+            InMemory::base64Encoded($this->container->getParameter('oauth')['encryption_key'])
         );
 
         $this->jwtConfiguration->setValidationConstraints(
