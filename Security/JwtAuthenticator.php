@@ -7,6 +7,7 @@ use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\Token\InvalidTokenStructure;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
 use MisfitPixel\Common\Auth\Entity\User;
@@ -84,7 +85,13 @@ class JwtAuthenticator extends AbstractAuthenticator
                 /**
                  * decode JWT from identifier.
                  */
-                $decodedJwt = $this->jwtConfiguration->parser()->parse($identifier);
+                try {
+                    $decodedJwt = $this->jwtConfiguration->parser()->parse($identifier);
+
+                } catch(InvalidTokenStructure $e) {
+                    throw new Exception\UnauthorizedException();
+                }
+
                 $routeParams = $request->attributes->get('_route_params');
                 $routeScopes = $routeParams['oauth_scopes'] ?? [];
 
