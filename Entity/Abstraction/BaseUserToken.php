@@ -302,7 +302,6 @@ abstract class BaseUserToken implements AccessTokenEntityInterface, RefreshToken
              * TODO: update User::getRoles() to return scopes here
              */
             ->withClaim('scopes', $this->getScopes())
-            ->withClaim('identity', $this->getIdentityId())
             ->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey())
             ;
     }
