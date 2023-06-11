@@ -49,6 +49,9 @@ abstract class BaseUserToken implements AccessTokenEntityInterface, RefreshToken
     /** @var Scope[]  */
     protected array $scopes = [];
 
+    /** @var string  */
+    protected string $redirectUri;
+
     /**
      * @return int|null
      */
@@ -266,19 +269,24 @@ abstract class BaseUserToken implements AccessTokenEntityInterface, RefreshToken
         return $this->setParent($accessToken);
     }
 
+    /**
+     * @return string
+     */
     public function getRedirectUri(): string
     {
-        /**
-         * TODO: make dynamic based on input from signin form.
-         * TODO: not saved to user_token, encoded in auth_code.
-         * TODO: move to config.
-         */
-        return 'https://www.misfitpixel.io';
+        return $this->redirectUri;
     }
 
+    /**
+     * @param $uri
+     * @return void
+     */
     public function setRedirectUri($uri)
     {
-        // TODO: Implement setRedirectUri() method.
+        /**
+         * is set from the authorization request URL.
+         */
+        $this->redirectUri = $uri;
     }
 
     /**
