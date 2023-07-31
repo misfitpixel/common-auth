@@ -183,4 +183,12 @@ class JwtAuthenticator extends AbstractAuthenticator
     {
         return [];
     }
+
+    /**
+     * @return Configuration
+     */
+    public function getJwtConfiguration(): Configuration
+    {
+        return $this->jwtConfiguration;
+    }
 }
