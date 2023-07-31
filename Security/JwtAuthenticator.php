@@ -95,10 +95,13 @@ class JwtAuthenticator extends AbstractAuthenticator
                 $routeParams = $request->attributes->get('_route_params');
                 $routeScopes = $routeParams['oauth_scopes'] ?? [];
 
+                $scopes = $decodedJwt->claims()->get('scopes');
+                $scopes = array_merge($scopes, $this->getAdditionalScopes($request));
+
                 /**
                  * compare scopes on route with scopes on token.
                  */
-                foreach($decodedJwt->claims()->get('scopes') as $scope) {
+                foreach($scopes as $scope) {
                     /**
                      * if root scope, end process.
                      */
@@ -172,4 +175,12 @@ class JwtAuthenticator extends AbstractAuthenticator
         throw new Exception\UnauthorizedException();
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function getAdditionalScopes(Request $request): array
+    {
+        return [];
+    }
 }
